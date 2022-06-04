@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: #a1a1a1;
+}
+
+.title {
+    text-align: center;
+    font-size: 1.8em;
+}
+
+.cubic {
+    width: 250px;
+    height: 250px;
+    margin: 200px auto 60px auto;
+    position: relative;
+}
+
+.Up,
+.Left,
+.Right,
+.Front {
+    width: 100%;
+    height: 100%;
+    border: 4px solid;
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.Up {
+    bottom: 100%;
+    transform: skewX(calc(var(--isRight)*-50deg)) scaleY(.4);
+    transform-origin: 100% 100%;
+}
+
+.Left {
+    right: 100%;
+    transform: skewY(40deg) scaleX(.48);
+    transform-origin: 100% 100%;
+}
+
+.Right {
+    left: 100%;
+    transform: skewY(-40deg) scaleX(.48);
+    transform-origin: 0% 100%;
+}
+
+.square {
+    width: calc(100%/3);
+    height: calc(100%/3);
+    border: 1px solid #000;
+    position: relative;
+}
+
+
+/* Background Colors */
+.bg-white,
+.bg-show-white::after, .bg-show-white::before { background: #fff; }
+.bg-green,
+.bg-show-green::after, .bg-show-green::before { background: #12b112; }
+.bg-red,
+.bg-show-red::after, .bg-show-red::before { background: #b40303; }
+.bg-blue,
+.bg-show-blue::after, .bg-show-blue::before { background: #033bb4; }
+.bg-orange,
+.bg-show-orange::after, .bg-show-orange::before { background: #f37a09; }
+.bg-yellow,
+.bg-show-yellow::after, .bg-show-yellow::before { background: #ffee06; }
+
+[class*=bg-show]::after,
+[class*=bg-show]::before {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: inherit;
+}
+
+.b[class*=bg-show]::after {bottom: 100%;}
+.b[class*=bg-show]::before {bottom: 200%;}
+
+.l[class*=bg-show]::after {left: 100%;}
+.l[class*=bg-show]::before {left: 200%;}
+
+.r[class*=bg-show]::after {right: 100%;}
+.r[class*=bg-show]::before {right: 200%;}
+
+.t[class*=bg-show]::after {top: calc(100% + 4px);}
+.t[class*=bg-show]::before {top: calc(100% + 4px);}
+
+
+.formula {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+    z-index: 10;
+    padding: 0 10px;
+}
+
+.top,
+.right,
+.bottom,
+.left,
+.front {
+    display: flex;
+    border: 1px solid;
+    margin: 5px;
+    width: 42px;
+    height: 42px;
+}
+
+.dot {
+    width: 10px;
+    flex-shrink: 0;
+    height: 10px;
+    background: #000;
+    border-radius: 50%;
+    margin: 2px;
+}
+
+.top > .action,
+.bottom > .action {
+    height: 38px;
+    border-radius: 0;
+    clip-path: polygon(
+        20% 0, 80% 0, 80% 75%, 100% 75%, 50% 100%, 0 75%, 20% 75%
+    );
+}
+
+.left > .action,
+.right > .action {
+    width: 38px;
+    border-radius: 0;
+    clip-path: polygon(
+        0 20%, 75% 20%, 75% 0, 100% 50%, 75% 100%, 75% 80%, 0 80%
+    );
+}
+
+.bottom {align-items: flex-end;}
+.left, .right {flex-direction: column;}
+.right {align-items: flex-end;}
+
+.bottom > .action {transform: rotateZ(180deg);}
+.right > .action {transform: rotateZ(180deg);}
+
+.action-left,
+.action-right {
+    width: 100%;
+    height: 100%;
+    background: #000;
+    clip-path: polygon(
+       10% 15%, 25% 2%, 25% 10%, 90% 10%, 90% 90%, 10% 90%, 10% 40%, 20% 40%,
+       20% 80%, 80% 80%, 80% 20%, 25% 20%, 25% 28%
+    );
+}
+
+.action-right {transform: rotateY(180deg);}
+
+
+@media screen and (max-width: 650px) {
+    .cubic {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+@media screen and (max-width: 510px) {
+    .cubic {
+        width: 150px;
+        height: 150px;
+    }
+}
+    </style>
+</head>
+<body>
+
+    <h1 class="title">1 - Level</h1>
+    
+    <div class="cubic">
+        <div class="Up" style="--isRight: -1">
+            <div class="square"></div>
+            <div class="square bg-white b bg-show-orange"></div>
+            <div class="square"></div>
+            <div class="square bg-white"></div>
+            <div class="square bg-white"></div>
+            <div class="square bg-white l bg-show-blue"></div>
+            <div class="square"></div>
+            <div class="square bg-white"></div>
+            <div class="square"></div>
+        </div>
+        <div class="Left">
+            <div class="square"></div>
+            <div class="square bg-green"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-green"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+
+        </div>
+        <div class="Front">
+            <div class="square"></div>
+            <div class="square bg-red"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-red"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+
+        </div>
+    </div>
+
+    <p class="title">
+        Agar
+    </p>
+
+    <div class="cubic">
+        <div class="Up" style="--isRight: 1">
+            <div class="square"></div>
+            <div class="square bg-white b bg-show-blue"></div>
+            <div class="square"></div>
+            <div class="square bg-white r bg-show-orange"></div>
+            <div class="square bg-white"></div>
+            <div class="square bg-white"></div>
+            <div class="square"></div>
+            <div class="square bg-white"></div>
+            <div class="square"></div>
+        </div>
+        <div class="Right">
+            <div class="square"></div>
+            <div class="square bg-green"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-red"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+
+        </div>
+        <div class="Front">
+            <div class="square"></div>
+            <div class="square bg-red"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-green"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+
+        </div>
+    </div>
+
+    <div class="formula">
+        <div class="bottom">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+
+        <div class="left">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+
+        <div class="top">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+
+        <div class="right">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+
+        <div class="bottom">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+    </div>
+
+    <br><br><br><br>
+    <hr>
+    <br><br><br><br>
+
+    <h1 class="title">2 - Level</h1>
+
+    <div class="cubic">
+        <div class="Up" style="--isRight: 1">
+            <div class="square"></div>
+            <div class="square bg-white"></div>
+            <div class="square"></div>
+            <div class="square bg-white"></div>
+            <div class="square bg-white"></div>
+            <div class="square bg-white"></div>
+            <div class="square"></div>
+            <div class="square bg-white"></div>
+            <div class="square"></div>
+        </div>
+        <div class="Right">
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-white"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+
+        </div>
+        <div class="Front">
+            <div class="square"></div>
+            <div class="square bg-green"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-green"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-green"></div>
+        </div>
+    </div>
+
+    <div class="formula">
+        <div class="top">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="right">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="bottom">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+    </div>
+
+    <div class="cubic">
+        <div class="Up" style="--isRight: -1">
+            <div class="square"></div>
+            <div class="square bg-white"></div>
+            <div class="square"></div>
+            <div class="square bg-white"></div>
+            <div class="square bg-white"></div>
+            <div class="square bg-white"></div>
+            <div class="square"></div>
+            <div class="square bg-white"></div>
+            <div class="square"></div>
+        </div>
+        <div class="Left">
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-white"></div>
+
+        </div>
+        <div class="Front">
+            <div class="square"></div>
+            <div class="square bg-red"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-red"></div>
+            <div class="square"></div>
+            <div class="square bg-red"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+        </div>
+    </div>
+
+    <div class="formula">
+        <div class="top">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="left">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="bottom">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
+
+     
+
+    <div class="cubic">
+        <div class="Up" style="--isRight: -1">
+            <div class="square"></div>
+            <div class="square bg-white"></div>
+            <div class="square"></div>
+            <div class="square bg-white"></div>
+            <div class="square bg-white"></div>
+            <div class="square bg-white"></div>
+            <div class="square"></div>
+            <div class="square bg-white"></div>
+            <div class="square"></div>
+        </div>
+        <div class="Left">
+            <div class="square"></div>
+            <div class="square bg-green"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-green"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-red t bg-show-white"></div>
+
+        </div>
+        <div class="Front">
+            <div class="square"></div>
+            <div class="square bg-red"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-red"></div>
+            <div class="square"></div>
+            <div class="square bg-green"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+        </div>
+    </div>
+
+    <div class="formula">
+        <div class="front">
+            <div class="action-left"></div>
+        </div>
+
+        <div class="top">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="left">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="left">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="bottom">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+
+        <div class="front">
+            <div class="action-right"></div>
+        </div>
+    </div>
+
+    <br><br><br><br>
+    <hr>
+    <br><br><br><br>
+
+
+    <h1 class="title">3 - Level</h1>
+
+    <div class="cubic">
+        <div class="Up" style="--isRight: -1">
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-yellow"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-blue"></div>
+            <div class="square"></div>
+        </div>
+        <div class="Left">
+            <div class="square"></div>
+            <div class="square bg-blue"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-blue"></div>
+            <div class="square"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+
+        </div>
+        <div class="Front">
+            <div class="square"></div>
+            <div class="square bg-red"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-red"></div>
+            <div class="square"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+        </div>
+    </div>
+
+    <div class="formula">
+        <div class="left">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="bottom">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="right">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="top">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="left">
+            <div class="dot"></div>
+            <div class="dot action"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="bottom">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="left">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="top">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+    </div>
+
+    <div class="cubic">
+        <div class="Up" style="--isRight: 1">
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-yellow"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-green"></div>
+            <div class="square"></div>
+        </div>
+        <div class="Right">
+            <div class="square"></div>
+            <div class="square bg-green"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-green"></div>
+            <div class="square"></div>
+            <div class="square bg-green"></div>
+            <div class="square bg-green"></div>
+            <div class="square bg-green"></div>
+
+        </div>
+        <div class="Front">
+            <div class="square"></div>
+            <div class="square bg-red"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-red"></div>
+            <div class="square"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+        </div>
+    </div>
+
+    <div class="formula">
+        <div class="right">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="bottom">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="left">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="top">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="right">
+            <div class="dot"></div>
+            <div class="dot action"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="bottom">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="right">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="top">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
+
+
+    <div class="cubic">
+        <div class="Up" style="--isRight: 1">
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-yellow"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+        </div>
+        <div class="Right">
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+
+        </div>
+        <div class="Front">
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-green"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+        </div>
+    </div>
+
+    <div class="formula">
+        <div class="top">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="top">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="right">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="right">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="top">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="top">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="right">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="right">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="top">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="top">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+    </div>
+    
+    
+    <div class="cubic">
+        <div class="Up" style="--isRight: 1">
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-yellow"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+        </div>
+        <div class="Right">
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+
+        </div>
+        <div class="Front">
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+        </div>
+    </div>
+
+    <div class="formula">
+        <div class="bottom">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="right">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="right">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="top">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="right">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="bottom">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="right">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="right">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="top">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="right">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="front">
+            <div class="action-left"></div>
+        </div>
+        <div class="left">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="front">
+            <div class="action-right"></div>
+        </div>
+    </div>
+
+
+    <br><br><br><br>
+    <hr>
+    <br><br><br><br>
+
+    <h1 class="title">4-Level</h1>
+
+    <div class="cubic">
+        <div class="Up" style="--isRight: 1">
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-yellow"></div>
+            <div class="square bg-yellow"></div>
+            <div class="square bg-yellow"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+        </div>
+        <div class="Right">
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+
+        </div>
+        <div class="Front">
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+        </div>
+    </div>
+
+    <div class="formula">
+        <div class="front">
+            <div class="action-right"></div>
+        </div>
+        <div class="bottom">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="right">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="top">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="left">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="front">
+            <div class="action-left"></div>
+        </div>
+    </div>
+
+
+
+    <div class="cubic">
+        <div class="Up" style="--isRight: 1">
+            <div class="square"></div>
+            <div class="square bg-yellow"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-yellow"></div>
+            <div class="square bg-yellow"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+        </div>
+        <div class="Right">
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+
+        </div>
+        <div class="Front">
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+        </div>
+    </div>
+
+    <div class="formula">
+        <div class="bottom">
+            <div class="dot"></div>
+            <div class="dot action"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="right">
+            <div class="dot action"></div>
+            <div class="dot action"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="bottom">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="right">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="top">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="left">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="left">
+            <div class="dot action"></div>
+            <div class="dot action"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="top">
+            <div class="dot"></div>
+            <div class="dot action"></div>
+            <div class="dot action"></div>
+        </div>
+    </div>
+
+    <div class="cubic">
+        <div class="Up" style="--isRight: 1">
+            <div class="square"></div>
+            <div class="square bg-yellow b bg-show-green"></div>
+            <div class="square"></div>
+            <div class="square bg-yellow r bg-show-orange"></div>
+            <div class="square bg-yellow"></div>
+            <div class="square bg-yellow"></div>
+            <div class="square"></div>
+            <div class="square bg-yellow"></div>
+            <div class="square"></div>
+        </div>
+        <div class="Right">
+            <div class="square"></div>
+            <div class="square bg-blue"></div>
+            <div class="square"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+
+        </div>
+        <div class="Front">
+            <div class="square"></div>
+            <div class="square bg-red"></div>
+            <div class="square"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+        </div>
+    </div>
+
+    <div class="formula">
+        <div class="right">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="bottom">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="right">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="top">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="right">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="bottom">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="right">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="right">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="top">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+    </div>
+
+    <br><br><br><br>
+    <hr>
+    <br><br><br><br>
+
+
+    <h1 class="title">5-Level</h1>
+
+    <div class="cubic">
+        <div class="Up" style="--isRight: 1">
+            <div class="square bg-yellow"></div>
+            <div class="square bg-yellow b bg-show-green"></div>
+            <div class="square bg-orange b bg-show-green"></div>
+            <div class="square bg-yellow r bg-show-orange"></div>
+            <div class="square bg-yellow"></div>
+            <div class="square bg-yellow"></div>
+            <div class="square bg-yellow r bg-show-orange"></div>
+            <div class="square bg-yellow"></div>
+            <div class="square bg-green"></div>
+        </div>
+        <div class="Right">
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-yellow"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+
+        </div>
+        <div class="Front">
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-yellow"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+        </div>
+    </div>
+
+    <div class="formula">
+        <div class="bottom">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="left">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="bottom">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="right">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="top">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="left">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="top">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="right">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
+
+
+    <div class="cubic">
+        <div class="Up" style="--isRight: -1">
+            <div class="square bg-green b bg-show-orange"></div>
+            <div class="square bg-yellow b bg-show-orange"></div>
+            <div class="square bg-yellow"></div>
+            <div class="square bg-yellow"></div>
+            <div class="square bg-yellow"></div>
+            <div class="square bg-yellow l bg-show-green"></div>
+            <div class="square bg-orange"></div>
+            <div class="square bg-yellow"></div>
+            <div class="square bg-yellow l bg-show-green"></div>
+        </div>
+        <div class="Left">
+            <div class="square bg-yellow"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+
+        </div>
+        <div class="Front">
+            <div class="square bg-yellow"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+        </div>
+    </div>
+
+    <div class="formula">
+        <div class="bottom">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="right">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="bottom">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="left">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="top">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="right">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="top">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot action"></div>
+        </div>
+        <div class="left">
+            <div class="dot action"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
+
+    <br><br><br><br>
+    <hr>
+    <br><br><br><br>
+
+    <h1 class="title">6-Level</h1>
+
+    <div class="cubic">
+        <div class="Up" style="--isRight: 1">
+            <div class="square bg-yellow"></div>
+            <div class="square bg-yellow"></div>
+            <div class="square bg-yellow"></div>
+            <div class="square bg-yellow"></div>
+            <div class="square bg-yellow"></div>
+            <div class="square bg-yellow"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-yellow"></div>
+            <div class="square bg-red"></div>
+        </div>
+        <div class="Right">
+            <div class="square bg-yellow"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-blue"></div>
+
+        </div>
+        <div class="Front">
+            <div class="square bg-yellow"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-blue"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+            <div class="square bg-red"></div>
+        </div>
+    </div>
+
+    <div class="formula">
+        <div class="top">
+            <div class="dot action"></div>
+            <div class="dot action"></div>
+            <div class="dot action"></div>
+        </div>
+        ( #F6
+            <div class="bottom">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot action"></div>
+            </div>
+            <div class="right">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot action"></div>
+            </div>
+            <div class="top">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot action"></div>
+            </div>
+            <div class="left">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot action"></div>
+            </div>
+        )
+    </div>
+    <div class="formula">
+        <h2>
+            #F6 Formula sariq joyiga kelguncha qaytariladi va keyingi burchak shu yerga keltirilib yana #F6 formula qaytariladi.
+        </h2>
+    </div>
+
+    <br><br><br>
+</body>
+</html>
